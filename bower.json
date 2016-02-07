@@ -1,0 +1,25 @@
+{
+  "name": "dockercutflow",
+  "authors": [
+    "Lukas Heinrich <lukas.heinrich@gmail.com>"
+  ],
+  "description": "cutflow webservice",
+  "main": "server.py",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "jquery": "~2.2.0",
+    "socket.io-client": "^1.4.5"
+  }
+}

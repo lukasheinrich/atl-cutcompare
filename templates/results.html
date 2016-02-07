@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+        <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>    </head>
+
+        <script src="/static/bower_components/codemirror/lib/codemirror.js"></script>
+        <link rel="stylesheet" href="/static/bower_components/codemirror/lib/codemirror.css">
+        <style type="text/css" media="screen">
+        tt{
+            color:orangered;
+        }
+        .CodeMirror{
+            background-color:black;
+            color:white;
+        }
+        .CodeMirror-linenumbers{
+            background-color:#444;
+        }
+
+        </style>
+
+        <script type="text/javascript">
+            var editor_lhs = undefined;
+            var editor_rhs = undefined;
+            var docs       = undefined;
+            var editors    = undefined;
+            $(document).ready(function(){
+              editor_lhs = CodeMirror.fromTextArea(document.getElementById("output_lhs"), {
+                lineNumbers: true,
+                readOnly: true,
+                lineWrapping:true
+              });
+              editor_rhs = CodeMirror.fromTextArea(document.getElementById("output_rhs"), {
+                lineNumbers: true,
+                readOnly: true,
+                lineWrapping:true
+              });
+              docs    = {lhs: editor_lhs.getDoc(), rhs: editor_rhs.getDoc()}
+              editors = {lhs: editor_lhs, rhs: editor_rhs}
+            });
+        </script>
+
+        <script src="/static/bower_components/socket.io-client/socket.io.js"></script>
+        <script>
+            var socket = io(location.origin);
+            socket.on('connect',function(){
+                console.log('connected!')
+            })
+
+            $(document).ready(function(){
+                var compid = '{{compid}}'
+                socket.emit('please_join',compid)
+            })
+            
+            function update_log(doc,data){
+                doc.setValue(doc.getValue()+data)
+            }
+        
+            socket.on('update_logs',function(data){
+                parsed = JSON.parse(data);
+                update_log(docs[parsed['side']],parsed['p'])
+                editor = editors[parsed['side']]
+                editor.scrollTo(0,editor.getScrollInfo()['height'])
+            })
+
+            socket.on('luke',function(data){
+                console.log(data)
+            })
+        </script>
+
+
+        <!-- // <script src="/static/bower_components/zsh.js/dist/zsh.js"></script>
+        // <link rel="stylesheet" href="static/bower_components/zsh.js/dist/zsh.css">
+        // <script>
+        //     $(document).ready(function(){
+        //         ZSH.create('terminal_one');
+        //     })
+        // </script> -->
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div id="terminal_one"></div>
+
+                <div class="col-md-12" style="margin:auto">
+                    <h1>Docker Cutflow Comparison Results {{compid}}</h1>
+                    <div class="col-md-6">
+                    <textarea id="output_lhs" rows="4" cols="50"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                    <textarea id="output_rhs" rows="4" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+</html>

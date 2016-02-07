@@ -1,0 +1,38 @@
+{
+  "name": "zsh.js",
+  "version": "2.2.3",
+  "homepage": "https://github.com/tadeuzagallo/Terminal.js",
+  "authors": [
+    "Tadeu Zagallo <tadeuzagallo@gmail.com>"
+  ],
+  "description": "A web version of my terminal",
+  "main": "build/terminal.js",
+  "keywords": [
+    "terminal",
+    "zsh",
+    "tmux",
+    "web-component"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "platform": "Polymer/platform#~0.3.5"
+  },
+  "_release": "2.2.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.2.3",
+    "commit": "7e9d50b1d5081a7f4b2c357ccd18d70a4e28bc6e"
+  },
+  "_source": "git://github.com/tadeuzagallo/Terminal.js.git",
+  "_target": "^2.2.3",
+  "_originalSource": "zsh.js",
+  "_direct": true
+}

@@ -1,0 +1,15 @@
+{
+  "name": "strip-ansi",
+  "homepage": "https://github.com/sindresorhus/strip-ansi",
+  "version": "3.0.0",
+  "_release": "3.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "3.0.0",
+    "commit": "51cb10979c93b7d0be1e4667506f673041bbbd3b"
+  },
+  "_source": "git://github.com/sindresorhus/strip-ansi.git",
+  "_target": "^3.0.0",
+  "_originalSource": "strip-ansi",
+  "_direct": true
+}

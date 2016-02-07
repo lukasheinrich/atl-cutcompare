@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+        <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>    </head>
+
+        <style type="text/css" media="screen">
+        tt{
+            color:orangered;
+        }
+        </style>
+
+        <script src="/static/bower_components/socket.io-client/socket.io.js"></script>
+        <script>
+            var socket = io(location.origin);
+            socket.on('connect',function(){
+                console.log('connected!')
+            })
+            socket.emit('please_join','lukeroom')
+            socket.on('luke',function(data){
+                console.log(data)
+            })
+        </script>
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1>Docker Cutflow Comparison</h1>
+                    <p>
+                        This service compares cutflow results for a given GRID datasset. The dataset is downloaded to a working director at <tt>/cutflowcomp/grid_download</tt>. The tool expects containers to write the cutflow results into <tt>/cutflowcomp/cutflow.yaml</tt> into the following <tt>YAML</tt> format:
+                    </p>
+<p>
+<pre style="display: inline-block;">
+- stepnameA: 100.00
+- stepnameB: 80.00
+- stepnameB: 30.00
+- stepnameB: 10.00
+</pre>
+</p>
+                    <p>
+                        Alternatively, a ROOT file can be placed into <tt>/cutflowcomp</tt> with a one dimensional Histogram named <tt>"Cutflow"</tt>.
+                    </p>
+                </div>
+            </div>
+            <form action="/submit" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                          <div class="col-md-4">
+                              <label for="dockerImageLHS">Docker Image</label>
+                              <input name="dockerImageLHS" type="text" class="form-control" id="dockerImageLHS" value="lukasheinrich/quickana-tutorial" placeholder="user2/image_name">
+                          </div>
+                          <div class="col-md-4">
+                              <label for="commandLHS">Command</label>
+                              <input name="commandLHS" type="text" class="form-control" id="commandLHS" value="./tests/travistest.sh" placeholder="./command">
+                          </div>
+                          <div class="col-md-4">
+                              <label for="outputLHS">Output filename</label>
+                              <input name="outputLHS" type="text" class="form-control" id="outputRHS" value="/analysis/submitDir/hist-test_ttbar_AOD.pool.root.root" placeholder="/analysis/output.root">
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                          <div class="col-md-4">
+                              <label for="dockerImageRHS">Docker Image</label>
+                              <input name="dockerImageRHS" type="text" class="form-control" id="dockerImageRHS" value="lukasheinrich/quickana-tutorial" placeholder="user2/image_name">
+                          </div>
+                          <div class="col-md-4">
+                              <label for="commandRHS">Command</label>
+                              <input name="commandRHS" type="text" class="form-control" id="commandRHS" value="./tests/travistest.sh" placeholder="./command">
+                          </div>
+                          <div class="col-md-4">
+                              <label for="outputRHS">Output filename</label>
+                              <input name="outputRHS" type="text" class="form-control" id="outputRHS" value="/analysis/submitDir/hist-test_ttbar_AOD.pool.root.root" placeholder="/analysis/output.root">
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-default">Compare!</button>                    
+                    <div class="col-md-12">
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>
