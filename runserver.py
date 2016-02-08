@@ -55,6 +55,10 @@ def start_server(socketname, compid, side, container, command, copyfrom, copyto)
     container_id = open(cidfile).read()
     cmd = 'docker cp {}:{} {}/{}.{}'.format(container_id,copyfrom,comparison_home,side,copyto)
     subprocess.call(shlex.split(cmd))
+
+
+    cmd = 'docker rm {}'.format(container_id)
+    subprocess.call(shlex.split(cmd))
     print 'exit, runserver'
     
 def start_docker(cmd,cid,socket,logfile,msgstub):

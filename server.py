@@ -52,7 +52,7 @@ def join(sid,data):
             sio.emit('update_logs',json.dumps({'side':side,'compid':data,'p':open(logname).read()}),room = sid)
 
     results = {'results':utils.collect_results(data)}
-    if results:
+    if results['results']:
         sio.emit('comp_results',json.dumps(results),room = sid)
 
 @sio.on('luke')

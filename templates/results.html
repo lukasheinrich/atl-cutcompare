@@ -70,6 +70,7 @@
 
             var comp_results = undefined;
             socket.on('comp_results',function(data){
+                console.log(data)
                 comp_results = JSON.parse(data)['results']
 
                 for (var i = 0; i < comp_results.length; i++) {
