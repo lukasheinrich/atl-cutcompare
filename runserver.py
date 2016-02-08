@@ -20,7 +20,7 @@ def docker_command(container,command):
     f = tempfile.NamedTemporaryFile()
     f.close()
     cidfile = f.name
-    cmd = 'docker pull {} && docker run --cidfile {}'.format(container,cidfile)
+    cmd = 'docker pull {} && docker run -it --cidfile {}'.format(container,cidfile)
     cmd += ' {} {}'.format(container,command)    
     print 'command is {}'.format(cmd)
     return cmd, cidfile
