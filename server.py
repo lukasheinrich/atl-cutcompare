@@ -51,7 +51,7 @@ def join(sid,data):
         if os.path.exists(logname):
             sio.emit('update_logs',json.dumps({'side':side,'compid':data,'p':open(logname).read()}),room = sid)
 
-    results = utils.collect_results(data)
+    results = {'results':utils.collect_results(data)}
     if results:
         sio.emit('comp_results',json.dumps(results),room = sid)
 

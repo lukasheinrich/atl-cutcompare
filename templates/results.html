@@ -70,8 +70,6 @@
 
             var comp_results = undefined;
             socket.on('comp_results',function(data){
-                console.log('results')
-                console.log(data)
                 comp_results = JSON.parse(data)['results']
 
                 for (var i = 0; i < comp_results.length; i++) {
@@ -83,7 +81,6 @@
                     if (agreement<0.01){
                         $('#cut-'+i).attr('class','success')
                     }else{
-                        console.log('danger!')
                         $('#cut-'+i).attr('class','danger')
                     }
                 }
