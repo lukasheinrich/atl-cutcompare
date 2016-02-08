@@ -32,15 +32,17 @@
                     </p>
 <p>
 <pre style="display: inline-block;">
-- stepnameA: 100.00
-- stepnameB: 80.00
-- stepnameB: 30.00
-- stepnameB: 10.00
+- name: cutname1
+  value: (numer of events passing cutname1)
+- name: cutname2
+  value: (numer of events passing cutname2)
+- name: cutname3
+  value: (numer of events passing cutname3)
+- name: cutname4
+  value: (numer of events passing cutname4)
+...
 </pre>
 </p>
-                    <p>
-                        Alternatively, a ROOT file can be placed into <tt>/cutflowcomp</tt> with a one dimensional Histogram named <tt>"Cutflow"</tt>.
-                    </p>
                 </div>
             </div>
             <form action="/submit" method="post">
@@ -49,7 +51,7 @@
                       <div class="form-group">
                           <div class="col-md-6">
                               <label for="dockerImageLHS">Docker Image</label>
-                              <input name="dockerImageLHS" type="text" class="form-control" id="dockerImageLHS" value="lukasheinrich/quickana-tutorial" placeholder="user2/image_name">
+                              <input name="dockerImageLHS" type="text" class="form-control" id="dockerImageLHS" value="lukasheinrich/cutflow_example:ex_one" placeholder="user2/image_name">
                           </div>
                           <div class="col-md-6">
                               <label for="commandLHS">Command</label>
@@ -61,7 +63,7 @@
                       <div class="form-group">
                           <div class="col-md-6">
                               <label for="dockerImageRHS">Docker Image</label>
-                              <input name="dockerImageRHS" type="text" class="form-control" id="dockerImageRHS" value="lukasheinrich/quickana-tutorial" placeholder="user2/image_name">
+                              <input name="dockerImageRHS" type="text" class="form-control" id="dockerImageRHS" value="lukasheinrich/cutflow_example:ex_two" placeholder="user2/image_name">
                           </div>
                           <div class="col-md-6">
                               <label for="commandRHS">Command</label>
