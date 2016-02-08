@@ -6,6 +6,10 @@
 
         <script src="/static/bower_components/codemirror/lib/codemirror.js"></script>
         <link rel="stylesheet" href="/static/bower_components/codemirror/lib/codemirror.css">
+
+        <script src="//d3js.org/d3.v3.min.js"></script>
+
+
         <style type="text/css" media="screen">
         tt{
             color:orangered;
@@ -64,19 +68,32 @@
                 editor.scrollTo(0,editor.getScrollInfo()['height'])
             })
 
+            var comp_results = undefined;
+            socket.on('comp_results',function(data){
+                console.log('results')
+                console.log(data)
+                comp_results = JSON.parse(data)['results']
+
+                for (var i = 0; i < comp_results.length; i++) {
+                    var cutresults = comp_results[i]
+                    $('#resultbody').append(
+                        '<tr id="cut-'+i+'"><td>'+cutresults['lhs'].toPrecision(5)+'</td><td class="text-center">'+cutresults['name']+'</td><td>'+cutresults['rhs'].toPrecision(5)+'</td></tr>'
+                    )
+                    var agreement = (cutresults['lhs']-cutresults['rhs'])/cutresults['lhs'];
+                    if (agreement<0.01){
+                        $('#cut-'+i).attr('class','success')
+                    }else{
+                        console.log('danger!')
+                        $('#cut-'+i).attr('class','danger')
+                    }
+                }
+                
+
+            })
             socket.on('luke',function(data){
                 console.log(data)
             })
         </script>
-
-
-        <!-- // <script src="/static/bower_components/zsh.js/dist/zsh.js"></script>
-        // <link rel="stylesheet" href="static/bower_components/zsh.js/dist/zsh.css">
-        // <script>
-        //     $(document).ready(function(){
-        //         ZSH.create('terminal_one');
-        //     })
-        // </script> -->
 
     <body>
         <div class="container-fluid">
@@ -93,7 +110,23 @@
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <table class="table">
+                     <thead>
+                      <tr>
+                         <th>LHS</th>
+                         <th class="text-center">Cut Name</th>
+                         <th>RHS</th>
+                      </tr>
+                     </thead>
+                     <tbody id="resultbody">
+                     </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
         </div>
 
     </body>

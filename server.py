@@ -7,10 +7,12 @@ import time
 import uuid
 import zmq
 import os
+import yaml
 import json
 import subprocess
 import runserver
 import client
+import utils
 import asynctasks
 from celeryapp import app as celeryapp
 
@@ -49,6 +51,10 @@ def join(sid,data):
         if os.path.exists(logname):
             sio.emit('update_logs',json.dumps({'side':side,'compid':data,'p':open(logname).read()}),room = sid)
 
+    results = utils.collect_results(data)
+    if results:
+        sio.emit('comp_results',json.dumps(results),room = sid)
+
 @sio.on('luke')
 def connect(sid, data):
     print "got event with sid: {} and data: {}".format(sid,data)
@@ -68,7 +74,7 @@ def zmq_monitor(sio,socketname):
         if socket in zr:
             jsondata = socket.recv_json()
             senddata = json.dumps(jsondata)
-            sio.emit('update_logs',senddata,room = jsondata['compid'])
+            sio.emit(jsondata['to'],senddata,room = jsondata['compid'])
         time.sleep(0.01)
 
 if __name__ == '__main__':

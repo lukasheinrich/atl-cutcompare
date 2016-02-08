@@ -35,6 +35,7 @@ def docker_command(container,command):
 @click.argument('copyto')
 def start_server(socketname, compid, side, container, command, copyfrom, copyto):
     comparison_home = 'comparisons/{}'.format(compid)
+    donefile = '{}/{}.done'.format(comparison_home,side)
     if os.path.exists(donefile):
         return
     
@@ -45,15 +46,16 @@ def start_server(socketname, compid, side, container, command, copyfrom, copyto)
     cmd, cidfile = docker_command(container,command)
     time.sleep(2)
     
-    donefile = '{}/{}.done'.format(comparison_home,side)
     logfile  = '{}/{}.log'.format(comparison_home,side)
-    msgstub  = {'compid':compid, 'side':side}
+    msgstub  = {'to':'update_logs','compid':compid, 'side':side}
     start_docker(cmd, cidfile,socket, logfile = logfile, msgstub = msgstub)
     open(donefile, 'a').close()
     
+    print 'docker done... copying result'
     container_id = open(cidfile).read()
     cmd = 'docker cp {}:{} {}/{}.{}'.format(container_id,copyfrom,comparison_home,side,copyto)
     subprocess.call(shlex.split(cmd))
+    print 'exit, runserver'
     
 def start_docker(cmd,cid,socket,logfile,msgstub):
     cmd = cmd + '| cat' #make sure there is not interactive updating
